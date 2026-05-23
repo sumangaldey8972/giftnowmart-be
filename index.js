@@ -5,7 +5,7 @@ const fileUpload = require("express-fileupload")
 
 const { app_configuration } = require("./config/app.config")
 const connect_mongodb = require("./connections/mongo.connection")
-const { authRoutes, roleRoutes, categoryRoutes, brandRoutes } = require("./routes")
+const { authRoutes, roleRoutes, categoryRoutes, brandRoutes, cloudionaryRoutes } = require("./routes")
 const cookieParser = require("cookie-parser")
 
 function setupMiddleware(app) {
@@ -26,6 +26,10 @@ function setupRoutes(app) {
     app.use("/role", roleRoutes);
     app.use("/category", categoryRoutes)
     app.use("/brand", brandRoutes)
+
+
+    // Cloudionary file upload
+    app.use("/cloudionary", cloudionaryRoutes)
 
     app.get("/", (req, res) => {
         return res.send({

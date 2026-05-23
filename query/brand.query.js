@@ -229,7 +229,8 @@ const editBrandQuery = async (details) => {
             name: details.name,
             slug: slugify(details.name),
             isActive: details.isActive,
-            isFeatured: details.isFeatured
+            isFeatured: details.isFeatured,
+            logo: details.logo
         };
 
         const brand = await brandModel.findByIdAndUpdate(
