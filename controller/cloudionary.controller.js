@@ -9,16 +9,16 @@ cloudinary.config({
 
 const generateSignatureForBrandLogo = async (req, res) => {
     try {
-        const { brandId, folderName } = req.body;
+        const { uniqueId, folderName } = req.body;
 
-        if (!brandId) {
-            return res.status(400).json({ error: "brandId is required" });
+        if (!uniqueId) {
+            return res.status(400).json({ error: "uniqueId is required" });
         }
 
         const timestamp = Math.round(Date.now() / 1000);
 
         const folder = folderName || "brand_logo";
-        const public_id = brandId; // ONE IMAGE PER PUBLISHER
+        const public_id = uniqueId; // ONE IMAGE PER PUBLISHER
 
         const paramsToSign = {
             timestamp,

@@ -101,12 +101,12 @@ const getBrandListQuery = async ({ page = 1, limit = 10, search }) => {
             {
                 $lookup: {
                     from: "products",
-                    let: { categoryId: "$_id" },
+                    let: { brandId: "$_id" },
                     pipeline: [
                         {
                             $match: {
                                 $expr: {
-                                    $eq: ["$categoryId", "$$categoryId"]
+                                    $eq: ["$brandId", "$$brandId"]
                                 }
                             }
                         },
@@ -273,5 +273,6 @@ module.exports = {
     createBrandQuery,
     getBrandListQuery,
     deleteBrandQuery,
-    editBrandQuery
+    editBrandQuery,
+    slugify
 };

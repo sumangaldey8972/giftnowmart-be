@@ -3,6 +3,7 @@ const roleRoutes = require("./roles.routes")
 const categoryRoutes = require("./category.routes")
 const brandRoutes = require("./brand.routes")
 const cloudionaryRoutes = require("./cloudinary.routes")
+const productRoutes = require("./product.routes")
 
 
 module.exports = {
@@ -10,5 +11,6 @@ module.exports = {
     roleRoutes,
     categoryRoutes,
     brandRoutes,
-    cloudionaryRoutes
+    cloudionaryRoutes,
+    productRoutes
 }
