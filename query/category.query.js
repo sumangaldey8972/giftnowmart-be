@@ -3,7 +3,6 @@ const { default: categoryModel } = require("../models/category.model")
 
 const createCategoryQuery = async (details) => {
     try {
-        console.log(details)
         const { catId, name, slug, isActive, createdBy } = details
 
         const exist = await categoryModel.findOne({ slug });

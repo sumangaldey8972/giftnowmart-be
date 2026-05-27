@@ -81,7 +81,7 @@ const getProductListQuery = async ({ page = 1, limit = 10, search }) => {
         if (search && search.trim()) {
             matchQuery.$or = [
                 {
-                    name: {
+                    title: {
                         $regex: search,
                         $options: "i"
                     }
