@@ -5,6 +5,8 @@ const router = express.Router()
 
 router.post('/sign-in', authController)
 
+router.post('/sign-up', signUpController)
+
 router.post('/verify-otp', verifyOtpController)
 
 router.post('/resend-otp', resendOtpController)

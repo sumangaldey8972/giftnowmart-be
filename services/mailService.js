@@ -45,7 +45,7 @@ const sendNewMemberMail = async (member) => {
 const sendOtpMail = async ({ to, subject, html, text, from }) => {
     try {
         const mailOptions = {
-            from: from || `"The Cartel Ai" <${process.env.ZOHO_USER}>`,
+            from: from || `"GiftNowMart" <${process.env.ZOHO_USER}>`,
             to,
             subject,
             html,

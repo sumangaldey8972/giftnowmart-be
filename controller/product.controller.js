@@ -13,9 +13,9 @@ const createProductController = async (req, res, next) => {
 const getProductListController = async (req, res, next) => {
     try {
 
-        const { page, limit, search } = req.query
+        const { page, limit, search, categorySlug } = req.query
 
-        const response = await getProductListQuery({ page: Number(page) || 1, limit: Number(limit) || 10, search: search || "" })
+        const response = await getProductListQuery({ page: Number(page) || 1, limit: Number(limit) || 10, search: search || "", categorySlug: categorySlug || "" })
         return res.send(response)
 
     } catch (error) {

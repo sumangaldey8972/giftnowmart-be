@@ -73,117 +73,141 @@ const createProductQuery = async (details) => {
     }
 };
 
-const getProductListQuery = async ({ page = 1, limit = 10, search }) => {
+const getProductListQuery = async ({
+    page = 1,
+    limit = 10,
+    search,
+    categorySlug,
+}) => {
     try {
-
         let matchQuery = {};
 
+        // SEARCH
         if (search && search.trim()) {
             matchQuery.$or = [
                 {
                     title: {
                         $regex: search,
-                        $options: "i"
-                    }
-                }
+                        $options: "i",
+                    },
+                },
             ];
         }
 
-        const aggregate = productModel.aggregate([
+        const aggregate =
+            productModel.aggregate([
+                // PRODUCT MATCH
+                {
+                    $match: matchQuery,
+                },
 
-            {
-                $match: matchQuery
-            },
+                // CATEGORY LOOKUP
+                {
+                    $lookup: {
+                        from: "categories",
+                        localField:
+                            "categoryId",
+                        foreignField:
+                            "_id",
+                        as: "categoryId",
+                    },
+                },
 
-            // Populate createdBy
-            {
-                $lookup: {
-                    from: "users",
-                    localField: "createdBy",
-                    foreignField: "_id",
-                    as: "createdBy"
-                }
-            },
+                {
+                    $unwind: {
+                        path: "$categoryId",
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
 
-            {
-                $unwind: {
-                    path: "$createdBy",
-                    preserveNullAndEmptyArrays: true
-                }
-            },
+                // CATEGORY FILTER
+                ...(categorySlug &&
+                    categorySlug !== "all"
+                    ? [
+                        {
+                            $match: {
+                                "categoryId.slug":
+                                    categorySlug,
+                            },
+                        },
+                    ]
+                    : []),
+                // BRAND LOOKUP
+                {
+                    $lookup: {
+                        from: "brands",
+                        localField:
+                            "brandId",
+                        foreignField:
+                            "_id",
+                        as: "brandId",
+                    },
+                },
 
-            {
-                $project: {
-                    productData: 0,
-                    "createdBy.password": 0
-                }
-            },
+                {
+                    $unwind: {
+                        path: "$brandId",
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
 
-            {
-                $sort: {
-                    createdAt: -1
-                }
-            },
+                // CREATED BY LOOKUP
+                {
+                    $lookup: {
+                        from: "users",
+                        localField:
+                            "createdBy",
+                        foreignField:
+                            "_id",
+                        as: "createdBy",
+                    },
+                },
 
-            // Populate category
-            {
-                $lookup: {
-                    from: "categories",
-                    localField: "categoryId",
-                    foreignField: "_id",
-                    as: "categoryId"
-                }
-            },
+                {
+                    $unwind: {
+                        path: "$createdBy",
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
 
-            {
-                $unwind: {
-                    path: "$categoryId",
-                    preserveNullAndEmptyArrays: true
-                }
-            },
+                // PROJECT
+                {
+                    $project: {
+                        productData: 0,
+                        "createdBy.password":
+                            0,
+                    },
+                },
 
-
-            // Populate brand
-            {
-                $lookup: {
-                    from: "brands",
-                    localField: "brandId",
-                    foreignField: "_id",
-                    as: "brandId"
-                }
-            },
-
-            {
-                $unwind: {
-                    path: "$brandId",
-                    preserveNullAndEmptyArrays: true
-                }
-            },
-
-        ]);
+                // SORT
+                {
+                    $sort: {
+                        createdAt: -1,
+                    },
+                },
+            ]);
 
         const options = {
             page,
-            limit
+            limit,
         };
 
-        const products = await productModel.aggregatePaginate(
-            aggregate,
-            options
-        );
+        const products =
+            await productModel.aggregatePaginate(
+                aggregate,
+                options
+            );
 
         return {
             status: true,
             statusCode: 200,
-            products
+            products,
         };
-
     } catch (error) {
-
         return {
             status: false,
             statusCode: 500,
-            message: error.message
+            message: error.message,
         };
     }
 };

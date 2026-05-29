@@ -46,7 +46,7 @@ const authQuery = async (details) => {
 
 const signUpQuery = async (details) => {
     try {
-        const { email, password, registrationType } = details;
+        const { firstName, lastName, email, password } = details;
 
         const existingUser = await userModel.findOne({ email });
 
@@ -88,8 +88,9 @@ const signUpQuery = async (details) => {
 
         // Create fresh user
         const newUser = await userModel.create({
+            firstName,
+            lastName,
             email,
-            registrationType: [registrationType],
             passwordHash: hashedPassword,
             isVerified: false
         });
@@ -102,11 +103,11 @@ const signUpQuery = async (details) => {
 
         console.log({ otp })
         // Send OTP
-        // await sendOtpMail({
-        //     to: newUser.email,
-        //     subject: "Your Registration OTP for Verification",
-        //     html: otpTemplate(otp)
-        // });
+        await sendOtpMail({
+            to: newUser.email,
+            subject: "Your Registration OTP for Verification",
+            html: otpTemplate(otp)
+        });
 
         return {
             status: true,
@@ -126,7 +127,6 @@ const signUpQuery = async (details) => {
 
 const verifyOtpQuery = async (details) => {
     try {
-        const { email, otp } = details;
 
         // 1. Check user exists
         const user = await userModel.findOne({ email });
@@ -147,6 +147,7 @@ const verifyOtpQuery = async (details) => {
                 message: "OTP not found. Please request a new OTP."
             };
         }
+
 
         // 3. Check OTP expiry
         if (otpEntry.otpExpires < Date.now()) {
@@ -215,6 +216,7 @@ const resendOtpQuery = async (details) => {
 
         // Check if OTP record exists for the user
         const existingOtp = await otpVerificationModel.findOne({ email });
+        console.log({ existingOtp })
 
         // Case 1: OTP exists
         if (existingOtp) {
@@ -257,11 +259,11 @@ const resendOtpQuery = async (details) => {
             otpExpires: Date.now() + 1 * 60 * 1000
         });
 
-        // await sendOtpMail({
-        //     to: email,
-        //     subject: "Your OTP for Verification",
-        //     html: otpTemplate(newOtp)
-        // });
+        await sendOtpMail({
+            to: email,
+            subject: "Your OTP for Verification",
+            html: otpTemplate(newOtp)
+        });
 
         return {
             status: true,

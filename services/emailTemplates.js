@@ -1,36 +1,71 @@
 const otpTemplate = (otp) => {
   return `
-    <div style="font-family: Arial, sans-serif; background-color: #f4f4f7; padding: 30px;">
-      <div style="max-width: 500px; margin: auto; background: #ffffff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+    <div style="font-family: 'Geist Sans', Arial, sans-serif; background-color: #eef2ff; padding: 40px 20px; min-height: 100%;">
+      <div style="max-width: 480px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(6, 21, 58, 0.05); border: 1px solid #dbe4ff;">
+        
+        <!-- Top Multi-color Brand Border Accent -->
+        <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
+          <tr>
+            <td style="background-color: #0b2e84; height: 4px; width: 60%;"></td>
+            <td style="background-color: #f3122f; height: 4px; width: 25%;"></td>
+            <td style="background-color: #f4b400; height: 4px; width: 15%;"></td>
+          </tr>
+        </table>
 
-        <!-- Header -->
-        <h2 style="text-align: center; color: #333; margin-bottom: 10px;">
-          🔐 Email Verification
-        </h2>
-        <p style="text-align: center; color: #555; margin-top: 0;">
-          Please use the OTP below to verify your email.
-        </p>
-
-        <!-- OTP Box -->
-        <div style="margin: 25px 0; text-align: center;">
-          <div style="font-size: 32px; font-weight: bold; letter-spacing: 6px; color: #2d7df4; padding: 12px 0;">
-            ${otp}
+        <div style="padding: 35px 30px;">
+          
+          <!-- Header / Brand Identifier -->
+          <div style="text-align: center; margin-bottom: 25px;">
+            <div style="font-size: 20px; font-weight: 800; color: #06153a; letter-spacing: -0.02em; margin: 0;">
+              GiftNow<span style="color: #0b2e84;">Mart</span>
+            </div>
+            <div style="font-size: 10px; font-weight: 700; uppercase; tracking: 0.1em; color: #f3122f; margin-top: 4px; letter-spacing: 1px;">
+              ADMIN SECURITY CONSOLE
+            </div>
           </div>
-          <p style="color: #777; font-size: 14px; margin-top: 5px;">
-            This OTP is valid for <b>1 minute</b>.
+
+          <hr style="border: 0; border-top: 1px solid #eef2ff; margin-bottom: 25px;" />
+
+          <!-- Context Title -->
+          <h2 style="font-size: 18px; font-weight: 700; color: #06153a; margin-top: 0; margin-bottom: 8px; text-align: center;">
+            Two-Factor Authentication
+          </h2>
+          <p style="font-size: 13px; color: #555555; line-height: 1.5; margin: 0; text-align: center;">
+            A request was made to access your admin management account. Use the verification code below to authorize this session.
           </p>
+
+          <!-- Premium Display OTP Container Box -->
+          <div style="margin: 30px 0; background-color: #eef2ff; border: 1px solid #dbe4ff; border-radius: 12px; padding: 20px; text-align: center;">
+            <div style="font-family: 'Geist Mono', monospace, Arial; font-size: 36px; font-weight: 800; letter-spacing: 8px; color: #0b2e84; padding: 5px 0 5px 8px;">
+              ${otp}
+            </div>
+            <div style="display: inline-block; margin-top: 10px; background-color: rgba(243, 18, 47, 0.08); border: 1px solid rgba(243, 18, 47, 0.15); border-radius: 6px; padding: 4px 10px;">
+              <p style="color: #f3122f; font-size: 11px; font-weight: 700; margin: 0;">
+                ⏱ Expires in 1 minute
+              </p>
+            </div>
+          </div>
+
+          <!-- Quick Security Notice -->
+          <table width="100%" cellspacing="0" cellpadding="0" style="background-color: #fafafa; border-radius: 8px; padding: 12px; border-left: 3px solid #f4b400;">
+            <tr>
+              <td style="font-size: 12px; color: #666666; line-height: 1.5;">
+                <strong>Security Alert:</strong> If you did not initiate this validation request, another party may have your credentials. Please update your master password immediately.
+              </td>
+            </tr>
+          </table>
+
         </div>
 
-        <!-- Info Text -->
-        <p style="color: #444; line-height: 1.6; font-size: 15px;">
-          If you didn't request this email, you can safely ignore it.  
-          Your account will remain secure.
-        </p>
-
-        <!-- Footer -->
-        <p style="text-align: center; color: #888; font-size: 12px; margin-top: 25px;">
-          © ${new Date().getFullYear()} The Cartel Ai — All Rights Reserved.
-        </p>
+        <!-- Footer Module Section -->
+        <div style="background-color: #fafafa; border-top: 1px solid #eef2ff; padding: 20px 30px; text-align: center;">
+          <p style="color: #888888; font-size: 11px; line-height: 1.4; margin: 0;">
+            This is an automated operational system update. Please do not reply directly to this mailbox.
+          </p>
+          <p style="color: #06153a; font-size: 11px; font-weight: 700; margin-top: 8px; margin-bottom: 0;">
+            © ${new Date().getFullYear()} GiftNowMart Admin Engine. All Rights Reserved.
+          </p>
+        </div>
 
       </div>
     </div>

@@ -46,12 +46,13 @@ const userSchema = new mongoose.Schema({
     role: [{ type: mongoose.Schema.Types.ObjectId, ref: "Role", required: true, default: [] }],
     refreshToken: { type: String, default: null }, // NEW FIELD
     fullName: { type: String, default: null },
+    firstName: { type: String, default: null },
+    lastName: { type: String, default: null },
     country: { type: String, default: null },
     countryCode: { type: String, default: null },
     phoneNumber: { type: String, default: null },
     profileImage: { type: String, default: null },
     isUserActive: { type: Boolean, default: true },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null }
 }, { timestamps: true });
 
 userSchema.plugin(aggregatePaginate)
