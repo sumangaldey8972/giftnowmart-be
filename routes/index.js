@@ -4,7 +4,7 @@ const categoryRoutes = require("./category.routes")
 const brandRoutes = require("./brand.routes")
 const cloudionaryRoutes = require("./cloudinary.routes")
 const productRoutes = require("./product.routes")
-
+const paymentMethodRoutes = require("./paymentMethod.routes")
 
 module.exports = {
     authRoutes,
@@ -12,5 +12,6 @@ module.exports = {
     categoryRoutes,
     brandRoutes,
     cloudionaryRoutes,
-    productRoutes
+    productRoutes,
+    paymentMethodRoutes
 }
